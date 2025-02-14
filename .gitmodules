@@ -1,0 +1,3 @@
+[submodule "themes/clean-dark"]
+	path = themes/clean-dark
+	url = https://github.com/howardliu-cn/hexo-theme-clean-dark.git
