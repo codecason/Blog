@@ -10,13 +10,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout branch
-        uses: actions/checkout@master
+        uses: actions/checkout@main
         with:
           ref: source
       - name: Use Node.js
-        uses: actions/setup-node@master
+        uses: actions/setup-node@main
         with:
-          node-version: '18.x'
+          node-version: '22'
       - name: Cache NPM dependencies
         uses: actions/cache@v2
         with:
@@ -27,7 +27,7 @@ jobs:
       - name: Prepare source
         run: |
           npm install hexo-renderer-ejs hexo-renderer-dartsass --save
-          git clone -b master https://github.com/ahonn/hexo-theme-even.git themes/even
+          git clone -b main https://github.com/ahonn/hexo-theme-even.git themes/even
           cp themes/even/_config.yml.example themes/even/_config.yml
       - name: Install Dependencies
         run: npm install
