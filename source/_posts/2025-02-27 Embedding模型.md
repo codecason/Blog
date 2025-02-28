@@ -9,7 +9,7 @@ mathjax: true
 #### 问题
 1.来到2024，文本向量化的SOTA模型都有哪些，各自的特点为何，leading board ?
 2.对于汉语增强的，国内提供的汉语为主及多语言embedding模型都有哪些?
-3.Embedding 模型的训练数据都有哪些?OpenAI的方法，以及这篇论文的方法的区别和联系在哪里?https://instructor-embedding.github.io/，显然你需要找到提到的两篇论文原文进行对比阅读再分析相关评述和引文
+3.Embedding 模型的训练数据都有哪些?OpenAI的方法，以及这篇论文的方法的区别和联系在哪里?https://instructor-embedding.github.io/， 显然你需要找到提到的两篇论文原文进行对比阅读再分析相关评述和引文
 
 
 1.
@@ -34,7 +34,7 @@ xiaobu-embedding-v2，来自论文Circle loss: A unified perspective of pair sim
 gte-Qwen2-7B-instruct，来自阿里，如问题1所陈述。
 
 3.
-常用的Embedding模型的训练数据是多样化的，主要是文本对，包括标题-内容对、输入-输出对以及问题-答案对(Shiyu Li et.al, Conan-embedding)。而在https://instructor-embedding.github.io/里所指的方法中，构建了MEDI数据集，包含了300余个数据集的数据，包含了Super-NI，它是是一个包含1616个NLP任务及其自然语言指令的大型基准，76种广泛的任务类型，涵盖55种不同的语言。
+常用的Embedding模型的训练数据是多样化的，主要是文本对，包括标题-内容对、输入-输出对以及问题-答案对(Shiyu Li et.al, Conan-embedding)。而在 https://instructor-embedding.github.io/ 里所指的方法中，构建了MEDI数据集，包含了300余个数据集的数据，包含了Super-NI，它是是一个包含1616个NLP任务及其自然语言指令的大型基准，76种广泛的任务类型，涵盖55种不同的语言。
 
 2024年1月，OpenAI发表的关于产生Embedding的方法：https://openai.com/index/new-embedding-models-and-api-updates/。
 Paper方法：
