@@ -7,12 +7,14 @@ title: Hexo
 subtitle: ''
 description: ''
 keywords:
-author: John Doe
+# Custom
+author: codecason
 language: en
 timezone: ''
 
 # URL
 ## Set your site url here. For example, if you use GitHub Page, set url as 'https://username.github.io/project'
+# Custom
 url: http://codecason.github.io/Blog
 permalink: :year/:month/:day/:title/
 permalink_defaults:
@@ -102,6 +104,7 @@ theme: even
 ## Docs: https://hexo.io/docs/one-command-deployment
 deploy:
   type: git
+  # Custom
   repo: https://github.com/codecason/Blog
   # example, https://github.com/hexojs/hexojs.github.io
   branch: main
