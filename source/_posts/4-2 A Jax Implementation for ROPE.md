@@ -12,7 +12,7 @@ Since the form input space is limited, please allow me to add more content.
 
 I'm currently a master student in Peking University, majoring in artificial intelligence. My current research field includes code generation in LLM.
 
-I'm interested in Jax, cause it is different from Pytorch and Tensorflow(Although it is more like numpy currently).And I quickly learned the docs, and found the features like grad, jit, and vmap.But as I studied the docs, I found there was still some space for improvement for the coherence and user-friendly guide. Besides, many new LLMs need support, so I thought it was a good opportunity to contribute to the community.
+I'm interested in Jax, cause it is different from Pytorch and Tensorflow(Although it is more like numpy currently).I quickly learned the docs, and found the features like grad, jit, and vmap.But as I studied the docs, I found there was still some space for improvement for the coherence and user-friendly guide. Besides, many new LLMs need support, so I thought it was a good opportunity to contribute to the community.
 
 Of course, this experience will enrich my resume and my future career as a reward.But I think the community could also benefit from my contribution and I could gain much more than that.
 
