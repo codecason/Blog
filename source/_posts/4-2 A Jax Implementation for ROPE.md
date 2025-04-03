@@ -1,7 +1,7 @@
 ---
 title: Implementation of ROPE in Jax
 tags: engineering, LLM
-date: 2025-02-12 22:42:39
+date: 2025-04-02 22:42:39
 categories: Jax, Artificial Intelligence, Gsoc
 author: codecason
 ---
