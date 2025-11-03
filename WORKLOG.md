@@ -1,3 +1,52 @@
+#### Hexo Install
+
+npm install hexo-cli -g
+
+安装完检查
+
+hexo --version
+
+
+
+#### Hexo 命令
+
+1.hexo init
+
+
+
+2.hexo new
+
+```
+hexo new [layout] <title>
+```
+
+layout取值：post，draft，page；
+
+page：在source命令下生成一个title名的文件夹和文件夹下的index.md；
+
+
+
+3.hexo generate
+
+```
+hexo generate
+hexo g
+```
+
+#### 移动草稿
+
+1.将文章文件从 `source/_posts` 目录移动到 `source/_drafts` 目录。
+
+2.修改文件的 Front-matter；打开移动后的文件，确保文件的 Front-matter 中包含 `status: draft`。
+
+3.重新生成网站：hexo g
+
+4.验证：hexo server
+
+
+
+
+
 #### 支持Mathjax https://myblackboxrecorder.com/use-math-in-hexo/
 
 Step
@@ -21,6 +70,7 @@ escape:
 
 意味着把`\#, \*`等符号改写成字面的符号；
 
+~~~
 (env310) /mnt/d/Labs/Labs-11/Blog$ npm list | grep math
 ├── hexo-filter-mathjax@0.9.0
 ├── hexo-math@5.0.0
@@ -28,6 +78,7 @@ escape:
 ├── hexo-renderer-ejs@2.0.0
 ├── hexo-renderer-marked@7.0.0
 ├── hexo-renderer-stylus@3.0.1
+~~~
 
 \$会被解释成 $直接写出来；
 但是\\不会被解释成？
@@ -38,7 +89,9 @@ escape:
 
 https://github.com/iissnan/hexo-theme-next/issues/1214
 
-#### 有几种相对路径的写法？
+
+
+#### 文章中引用的图片有几种相对路径的写法？
 
 要保证引用的url为：
 
