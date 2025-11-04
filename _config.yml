@@ -117,3 +117,4 @@ mathjax:
     append_css: true # add CSS to every page
     # if true, every page will be rendered by mathjax regardless the `mathjax` setting in Front-matter of each article
     every_page: false
+    src: "//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"
