@@ -5,4 +5,4 @@ date: 2025-02-14 19:23:58
 
 # 这是我的个人简介
 
-我是一名开发者，热爱编程和技术分享。
+A developer. Details comming soon.
