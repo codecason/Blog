@@ -1,0 +1,13 @@
+<div class="article-list">
+<% if (page.posts && page.posts.length) { page.posts.each(function(post, i) { %>
+  <a class="article-row" href="<%- url_for(post.path) %>">
+    <span class="mono"><%= String(i + 1 + ((page.current || 1)-1)*(config.per_page || 10)).padStart(2,'0') %></span>
+    <div><h3><%= post.title || '未命名文章' %></h3>
+      <div class="article-meta"><time datetime="<%= date(post.date,'YYYY-MM-DD') %>"><%= date(post.date,'YYYY.MM.DD') %></time>
+      <% post.categories.each(function(category) { %><span><%= category.name %></span><% }) %>
+      <span>约 <%= Math.max(1, Math.ceil(strip_html(post.content || '').length / 500)) %> 分钟</span></div>
+    </div><span aria-hidden="true">↗</span>
+  </a>
+<% }) } else { %><p class="empty-state">这里还没有文章。</p><% } %>
+</div>
+<% if (page.total > 1) { %><nav class="pagination" aria-label="文章分页"><%- paginator({prev_text:'← 上一页',next_text:'下一页 →'}) %></nav><% } %>

@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="<%= theme.language || config.language || 'zh-CN' %>">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title><%= page.title ? page.title + ' · ' : '' %><%= theme.site_title || config.title %></title>
+  <meta name="description" content="<%= strip_html(page.description || page.excerpt || config.description || theme.intro_text || '').slice(0,160) %>">
+  <link rel="canonical" href="<%= page.permalink || full_url_for(page.path || '') %>">
+  <link rel="stylesheet" href="<%- url_for('/css/landing-notes.css') %>">
+  <script src="<%- url_for('/js/landing-notes.js') %>" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main-content">跳至主要内容</a>
+  <header class="site-header"><div class="header-inner">
+    <a class="brand" href="<%- url_for('/') %>" aria-label="首页">
+      <svg class="brand-mark" viewBox="0 0 40 40" aria-hidden="true"><path d="M5 31 20 5 35 31Z M12 31 20 17 28 31" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+      <span class="brand-name"><%= theme.brand || config.author || config.title %><span class="accent">.</span></span>
+    </a>
+    <button class="menu-toggle" type="button" aria-controls="main-nav" aria-expanded="false">菜单 +</button>
+    <nav id="main-nav" class="main-nav" aria-label="主导航">
+      <a href="<%- url_for('/') %>#articles"><span class="nav-index">01</span>文字</a>
+      <a href="<%- url_for('/archives/') %>"><span class="nav-index">02</span>归档</a>
+      <a href="<%- url_for('/') + '#tag-filters' %>"><span class="nav-index">03</span>标签</a>
+      <a href="<%- url_for('/about/') %>">关于 ↗</a>
+    </nav>
+  </div></header>
+  <main id="main-content" class="page-container"><%- body %></main>
+  <footer class="site-footer page-container"><div class="footer-bottom">
+    <span>© <%= date(Date.now(), 'YYYY') %> <%= config.author %></span>
+    <span class="footer-note mono"><%= theme.footer_text %></span>
+    <a href="#main-content">回到顶部 ↑</a>
+  </div></footer>
+</body></html>
+

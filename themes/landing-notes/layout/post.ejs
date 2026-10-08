@@ -1,0 +1,10 @@
+<article class="reader">
+  <a class="text-link reader-back" href="<%- url_for('/') %>#articles">← 返回所有文字</a>
+  <header class="reader-header"><p class="eyebrow">FIELD NOTES / <% if(page.categories) { page.categories.each(function(c) { %><a href="<%- url_for(c.path) %>"><%= c.name %></a><% }) } %></p>
+    <h1><%= page.title %></h1><div class="article-meta"><span><%= page.author || config.author %></span><time datetime="<%= date(page.date,'YYYY-MM-DD') %>"><%= date(page.date,'YYYY.MM.DD') %></time><span>约 <%= Math.max(1,Math.ceil(strip_html(page.content || '').length/500)) %> 分钟</span></div>
+  </header>
+  <% const contents = theme.toc ? toc(page.content, {list_number: false}) : ''; if(contents) { %><details class="reader-toc"><summary>文章目录 <span>展开 +</span></summary><nav aria-label="文章目录"><%- contents %></nav></details><% } %>
+  <div class="prose"><%- page.content %></div>
+  <% if (page.tags && page.tags.length) { %><div class="taxonomy-list"><% page.tags.each(function(t) { %><a href="<%- url_for(t.path) %>"># <%= t.name %></a><% }) %></div><% } %>
+  <nav class="reader-end" aria-label="相邻文章"><% if(page.prev) { %><a class="text-link" href="<%- url_for(page.prev.path) %>">← <%= page.prev.title %></a><% } %><% if(page.next) { %><a class="text-link" href="<%- url_for(page.next.path) %>"><%= page.next.title %> →</a><% } %></nav>
+</article>

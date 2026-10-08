@@ -1,0 +1,6 @@
+<section class="section archive-section">
+  <div class="section-heading"><div><p class="eyebrow">ARCHIVE / 文章归档</p><h2><%= page.category || (page.tag ? 'TAGS' : '') || (page.year ? page.year + (page.month ? ' / ' + page.month : '') : 'ALL NOTES') %><span class="accent">.</span></h2></div><span class="mono"><%= site.posts.length %> 篇文字</span></div>
+  <% if (page.tag) { %><%- partial('_partial/tag-filter') %><% } %>
+  <div data-tag-fallback><%- partial('_partial/list') %></div>
+</section>
+

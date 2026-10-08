@@ -1,0 +1,11 @@
+# Identity falls back to the original blog's author/title.
+brand: ''
+site_title: ''
+language: zh-CN
+eyebrow: PERSONAL BLOG / FIELD NOTES
+headline: THINK IN
+headline_second: NOTES
+intro_title: 记录思考，持续构建。
+intro_text: 学习笔记、技术实践与日常记录。
+footer_text: THINK. WRITE. BUILD.
+toc: true

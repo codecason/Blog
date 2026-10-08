@@ -1,0 +1,26 @@
+<% if (!page.current || page.current === 1) { %>
+<section class="hero" id="home">
+  <div class="hero-topline mono"><span><%= theme.eyebrow %></span><span>THINK / WRITE / BUILD</span></div>
+  <div class="hero-stage">
+    <h1 class="hero-title"><span><%= theme.headline %></span><span class="title-second"><%= theme.headline_second %><span class="accent">.</span></span></h1>
+    <figure class="notes-study" aria-label="几何线稿装饰">
+      <svg viewBox="0 0 400 400" fill="none" aria-hidden="true"><g stroke="currentColor" stroke-width="1">
+      <% for (let i=0; i<16; i++) { %><ellipse cx="200" cy="200" rx="<%= 24+i*9 %>" ry="155" transform="rotate(<%= i*11.25 %> 200 200)"/><% } %>
+      </g><circle cx="200" cy="200" r="6" fill="var(--accent)"/></svg>
+      <figcaption class="mono">A STUDY IN CONTINUITY / 01</figcaption>
+    </figure>
+  </div>
+  <div class="hero-introduction notes-introduction"><p class="eyebrow"><%= config.author %> / NOTES</p><h2><%= theme.intro_title %></h2><div class="hero-bio"><p><%= config.description || theme.intro_text %></p><a class="text-link" href="<%- url_for('/about/') %>">关于我 ↗</a></div></div>
+  <div class="hero-bottom"><span><%= site.posts.length %> 篇文章 · 持续更新</span><a class="mono" href="#articles">SELECTED WRITING ↓</a></div>
+</section>
+<% } %>
+<section class="section" id="articles">
+  <div class="section-heading"><div><p class="eyebrow">01 / 文字记录</p><h2>FIELD NOTES<span class="accent">.</span></h2></div><a class="text-link" href="<%- url_for('/archives/') %>">全部归档 ↗</a></div>
+  <% const latest = page.posts && page.posts.first(); if (latest && (!page.current || page.current === 1)) { %>
+  <a class="featured-article notes-featured" href="<%- url_for(latest.path) %>">
+    <div class="notes-featured-art"><span class="mono">LATEST / <%= date(latest.date, 'YYYY') %></span><span class="notes-number">01<span class="accent">.</span></span><span class="mono">THOUGHTS IN PROGRESS</span></div>
+    <div class="featured-copy"><span class="eyebrow">LATEST WRITING / 最新文章</span><h3><%= latest.title %></h3><p><%= truncate(strip_html(latest.excerpt || latest.content || ''), {length: 180}) %></p><div class="article-meta"><time><%= date(latest.date,'YYYY.MM.DD') %></time><span>开始阅读 →</span></div></div>
+  </a><% } %>
+  <%- partial('_partial/tag-filter') %>
+  <div data-tag-fallback><%- partial('_partial/list') %></div>
+</section>

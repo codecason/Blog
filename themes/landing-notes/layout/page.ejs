@@ -1,0 +1,5 @@
+<article class="reader"><a class="text-link reader-back" href="<%- url_for('/') %>">← 返回首页</a>
+<header class="reader-header"><p class="eyebrow">PERSONAL NOTES</p><h1><%= page.title %></h1></header>
+<div class="prose"><%- page.content %></div>
+<% if (/^tags\//.test(page.path)) { %><%- partial('_partial/tag-filter') %><div class="taxonomy-list" data-tag-fallback><% site.tags.sort('name',1).each(function(tag) { %><a href="<%- url_for(tag.path) %>"><%= tag.name %> <span class="mono">(<%= tag.length %>)</span></a><% }) %></div><% } %>
+</article>
