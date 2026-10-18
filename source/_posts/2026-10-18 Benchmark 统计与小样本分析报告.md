@@ -8,6 +8,8 @@ layout: post
 
 # Benchmark 统计与小样本分析报告
 
+**样例内容：**以下保留取得的原文；长样例在完整句子、段落或代码块边界保留首尾，含省略标记的长度上限为2,000字符。元数据、中文整理和公开展示题单独标注。
+
 | Benchmark                | DS-V4.1-Flash-1017 | DS-V4.1-Flash | K3   | GLM-5.3 | GPT-5.6 Sol | Opus 5 |
 | ------------------------ | ------------------ | ------------- | ---- | ------- | ----------- | ------ |
 | HLE w/o tools            | 42.6 (44.0†)       | 36.8 (39.1†)  | 43.5 | 42.0†   | 44.5        | 56.3   |
@@ -84,7 +86,6 @@ DeepSeek-V4.1-Flash-1017的Benchmark测试如上；
 
 **评分与使用边界：**官方评价包含正确率和置信度校准。原版 HLE、Rolling 和 Diamond 各有题集，应按版本分别记录。两道官网展示题用于说明题目结构；总体长度和难度需要全量统计。科研和工程交付能力需要结合相应任务评测。
 
-**样例内容：**以下保留取得的原文；长样例在完整句子、段落或代码块边界保留首尾，含省略标记的长度上限为2,000字符。元数据、中文整理和公开展示题单独标注。
 
 **public_example_1** — 官网公开展示题，非随机抽样。原始文本 197 字符。
 
@@ -98,7 +99,7 @@ A transliteration of the text is provided: RGYNᵓ BT ḤRY BR ᶜTᵓ ḤBL
 
 ![HLE（w/o tools） / public_example_1：样例原图](../../../../images/bench-2026-10-18/hle_public_example_1.png)
 
-HLE（w/o tools） / public_example_1：样例原图。点击图片查看原始尺寸。
+HLE（w/o tools） / public_example_1：样例原图。
 
 **public_example_2** — 官网公开展示题，非随机抽样。原始文本 283 字符。
 
@@ -127,7 +128,6 @@ Hummingbirds within Apodiformes uniquely have a bilaterally paired oval bone, a 
 
 **评分与版本：**任务成功通常要求全部验证条件满足。4.0 调整了任务集和资源配置。比较成绩时，应统一评测版本、Agent 框架、模型预算和重复次数。
 
-**样例内容：**以下保留取得的原文；长样例在完整句子、段落或代码块边界保留首尾，含省略标记的长度上限为2,000字符。元数据、中文整理和公开展示题单独标注。
 
 **live-database-cutover** — 正式题面。原始文本 1017 字符。
 
@@ -179,7 +179,6 @@ You have 28800 seconds to complete this task. Do not cheat by using online solut
 
 **评分与分析范围：**看通过率时应同时检查新增测试和既有回归测试。提交遗漏、超时或上下文耗尽可导致失败。网页和仓库文件各有包装文字，本报告的长度固定采用已保存的仓库 instruction.md。
 
-**样例内容：**以下保留取得的原文；长样例在完整句子、段落或代码块边界保留首尾，含省略标记的长度上限为2,000字符。元数据、中文整理和公开展示题单独标注。
 
 **cliffy-config-file-parsing** — 正式题面。原始文本 2073 字符。
 
@@ -227,35 +226,8 @@ IMPORTANT: Please work on this in a new branch from main and commit everything w
 
 **评分与本次边界：**应分别报告完全解决、至少95%测试通过的接近解决、平均测试通过率。三者分别反映完整交付、接近完成和部分实现的程度。本次完成两项真实任务的元数据和测试覆盖分析；输入文档长度和运行成功率需在镜像环境中进一步测量。
 
-**样例内容：**以下保留取得的原文；长样例在完整句子、段落或代码块边界保留首尾，含省略标记的长度上限为2,000字符。元数据、中文整理和公开展示题单独标注。
-
-**burntsushi__ripgrep.3b7fd44** — 正式任务元数据原文；不是Agent完整题面。原始文本 198 字符。
-
-~~~text
-repository: BurntSushi/ripgrep
-commit: 3b7fd442a6f3aa73f650e763d7cbb902c03d700e
-language: rs
-difficulty: medium
-eval_clean_hashes:
-- 18b4d1ed66746d5cb6a7efaf634e53434844eb4acbba20492445d55c6b344559
-~~~
 
 
-样例文件：data/program/files/src/programbench/data/tasks/burntsushi__ripgrep.3b7fd44/task.yaml
-
-**jqlang__jq.b33a763** — 正式任务元数据原文；不是Agent完整题面。原始文本 188 字符。
-
-~~~text
-repository: jqlang/jq
-commit: b33a7634ba34ffa7ce7368cc0ebf5ca40b54c7e6
-language: c
-difficulty: medium
-eval_clean_hashes:
-- 6ca182a6c27d6e7081f23fc70d09a6030f05dab810504644c0bd3ff3869f12b6
-~~~
-
-
-样例文件：data/program/files/src/programbench/data/tasks/jqlang__jq.b33a763/task.yaml
 
 **来源：**[官方项目](https://github.com/facebookresearch/ProgramBench)；[官网与评分定义](https://programbench.com/)；[使用说明](https://github.com/facebookresearch/ProgramBench/blob/main/docs/README.md)
 
@@ -277,7 +249,6 @@ eval_clean_hashes:
 
 **评分意义：**平均测试通过率衡量已实现功能的覆盖程度；完整仓库通过率要求整项交付满足验证条件。报告应保留两者，并注明是否向 Agent 提供测试。两份样本按分析目的选择，用于展示规格结构；模型总体表现需在104项任务上评测。
 
-**样例内容：**以下保留取得的原文；长样例在完整句子、段落或代码块边界保留首尾，含省略标记的长度上限为2,000字符。元数据、中文整理和公开展示题单独标注。
 
 **aiofiles** — 正式题面。原始文本 48890 字符。
 
@@ -436,7 +407,6 @@ print("Performance and resource management tests passed")
 
 **评分与分析范围：**partial_credit 是断言满足比例；正式 task_completed_correctly 需要全部断言通过。官网私有题集与公开600题各自计分，报告成绩时应标明所用题集。本次保存的是源码定义的初始状态；实际运行环境还会经过噪声注入等初始化步骤。
 
-**样例内容：**以下保留取得的原文；长样例在完整句子、段落或代码块边界保留首尾，含省略标记的长度上限为2,000字符。元数据、中文整理和公开展示题单独标注。
 
 **501** — 正式题面。原始文本 644 字符。
 
@@ -480,7 +450,6 @@ Add Director-level contacts to the Q2 Executive Outreach campaign (ID: 701xx0000
 
 **评分与本次边界：**不同任务按其交付物进行验证，框架可返回[0,1]得分。本次分析材料为题面与任务实现。样本长度按含路径占位符的模板统计。完整运行需要部署专业软件或虚拟机，并取得输入资产；实际输入长度应在该环境中测量。
 
-**样例内容：**以下保留取得的原文；长样例在完整句子、段落或代码块边界保留首尾，含省略标记的长度上限为2,000字符。元数据、中文整理和公开展示题单独标注。
 
 **digital_marketing_ab_test_analysis_1** — 正式任务模板，路径占位符未展开。原始文本 3484 字符。
 
@@ -593,7 +562,6 @@ toolpath design are your choices.
 
 **评分与访问条件：**采用逐条rubric判断，必须区分单次成功、至少一次成功和多次都成功。完整上下文长度需要在三个共享容器镜像和31个world中实测。本次保留官方展示图、公开来源和授权条件，作为结构分析材料。
 
-**样例内容：**以下保留取得的原文；长样例在完整句子、段落或代码块边界保留首尾，含省略标记的长度上限为2,000字符。元数据、中文整理和公开展示题单独标注。
 
 **World221_TR_10** — 官方任务展示图的中文整理；非逐字原文，非完整附件包。原始文本 300 字符。
 
@@ -612,7 +580,7 @@ toolpath design are your choices.
 
 ![Apex Bench v1.1 → APEX-Agents 1.1 / World221_TR_10：样例原图](../../../../images/bench-2026-10-18/apex_World221_TR_10.png)
 
-Apex Bench v1.1 → APEX-Agents 1.1 / World221_TR_10：样例原图。点击图片查看原始尺寸。
+Apex Bench v1.1 → APEX-Agents 1.1 / World221_TR_10：样例原图。
 
 **来源：**[官方v1.1说明](https://www.mercor.com/blog/introducing-apex-agents-1-1/)；[官方数据卡](https://huggingface.co/datasets/mercor/apex-agents-v1.1)
 
@@ -632,7 +600,6 @@ Apex Bench v1.1 → APEX-Agents 1.1 / World221_TR_10：样例原图。点击图�
 
 **样本真实性与评分：**本报告分析官方博客展示的三道正式示例。GitHub sample_charts 中另有两道标为dummy tasks的框架测试题。数值评分应采用各题规定的容许区间。
 
-**样例内容：**以下保留取得的原文；长样例在完整句子、段落或代码块边界保留首尾，含省略标记的长度上限为2,000字符。元数据、中文整理和公开展示题单独标注。
 
 **public_example_1** — 官方博客公开展示题，非随机抽样。原始文本 145 字符。
 
@@ -645,7 +612,7 @@ For an outlet pipe with a diameter of 48 inches and a flow of 73 cubic feet per 
 
 ![Chartography（w/tools） / public_example_1：样例原图](../../../../images/bench-2026-10-18/chartography_public_example_1.webp)
 
-Chartography（w/tools） / public_example_1：样例原图。点击图片查看原始尺寸。
+Chartography（w/tools） / public_example_1：样例原图。
 
 **public_example_2** — 官方博客公开展示题，非随机抽样。原始文本 110 字符。
 
@@ -658,7 +625,7 @@ What height corresponds to the 50th percentile for a four-year-old girl? Round t
 
 ![Chartography（w/tools） / public_example_2：样例原图](../../../../images/bench-2026-10-18/chartography_public_example_2.webp)
 
-Chartography（w/tools） / public_example_2：样例原图。点击图片查看原始尺寸。
+Chartography（w/tools） / public_example_2：样例原图。
 
 **public_example_3** — 官方博客公开展示题，非随机抽样。原始文本 87 字符。
 
@@ -671,7 +638,7 @@ In which three directions did winds above 8.5 m/s occur for the longest total du
 
 ![Chartography（w/tools） / public_example_3：样例原图](../../../../images/bench-2026-10-18/chartography_public_example_3.webp)
 
-Chartography（w/tools） / public_example_3：样例原图。点击图片查看原始尺寸。
+Chartography（w/tools） / public_example_3：样例原图。
 
 **来源：**[官方论文](https://arxiv.org/abs/2608.10677)；[官方博客与展示题](https://surgehq.ai/blog/chartography)；[官方框架](https://github.com/surge-ai/chartography)
 
@@ -691,7 +658,6 @@ Chartography（w/tools） / public_example_3：样例原图。点击图片查看
 
 **其余样例与评价：**464在密集英文词网格中找拼写异项；507在308个字母轮廓中找局部差异；5113计数猫形图案；708推断图形叠加规律。官方代码使用答案比对裁判，并可按大类和子类报告正确率。裁剪和放大可能改变结果，必须与无工具成绩分开。
 
-**样例内容：**以下保留取得的原文；长样例在完整句子、段落或代码块边界保留首尾，含省略标记的长度上限为2,000字符。元数据、中文整理和公开展示题单独标注。
 
 **5113** — 正式题面。原始文本 58 字符。
 
@@ -704,7 +670,7 @@ How many cat silhouette patterns are there in the picture?
 
 ![BabyVision（w/tools） / 5113：样例原图](../../../../images/bench-2026-10-18/babyvision_5113.jpg)
 
-BabyVision（w/tools） / 5113：样例原图。点击图片查看原始尺寸。
+BabyVision（w/tools） / 5113：样例原图。
 
 **527** — 正式题面。原始文本 109 字符。
 
@@ -717,7 +683,7 @@ Which of the 6 planar figures given on the left (numbered 1-6) is the top view o
 
 ![BabyVision（w/tools） / 527：样例原图](../../../../images/bench-2026-10-18/babyvision_527.jpg)
 
-BabyVision（w/tools） / 527：样例原图。点击图片查看原始尺寸。
+BabyVision（w/tools） / 527：样例原图。
 
 **708** — 正式题面。原始文本 147 字符。
 
@@ -730,7 +696,7 @@ According to the pattern of the three pictures in the first row, which of the op
 
 ![BabyVision（w/tools） / 708：样例原图](../../../../images/bench-2026-10-18/babyvision_708.jpg)
 
-BabyVision（w/tools） / 708：样例原图。点击图片查看原始尺寸。
+BabyVision（w/tools） / 708：样例原图。
 
 **445** — 正式题面。原始文本 246 字符。
 
@@ -743,7 +709,7 @@ The image shows a total of 49 tiger patterns arranged in 7 rows and 7 columns. O
 
 ![BabyVision（w/tools） / 445：样例原图](../../../../images/bench-2026-10-18/babyvision_445.jpg)
 
-BabyVision（w/tools） / 445：样例原图。点击图片查看原始尺寸。
+BabyVision（w/tools） / 445：样例原图。
 
 **464** — 正式题面。原始文本 270 字符。
 
@@ -756,7 +722,7 @@ The image shows 25 rows and 10 columns, totaling 250 English words. All but one 
 
 ![BabyVision（w/tools） / 464：样例原图](../../../../images/bench-2026-10-18/babyvision_464.jpg)
 
-BabyVision（w/tools） / 464：样例原图。点击图片查看原始尺寸。
+BabyVision（w/tools） / 464：样例原图。
 
 **507** — 正式题面。原始文本 233 字符。
 
@@ -769,7 +735,7 @@ There are 308 uppercase letters "C" in the image, arranged in 11 rows and 28 col
 
 ![BabyVision（w/tools） / 507：样例原图](../../../../images/bench-2026-10-18/babyvision_507.jpg)
 
-BabyVision（w/tools） / 507：样例原图。点击图片查看原始尺寸。
+BabyVision（w/tools） / 507：样例原图。
 
 **来源：**[官方仓库](https://github.com/UniPat-AI/BabyVision)；[官方数据](https://huggingface.co/datasets/UnipatAI/BabyVision)；[全量统计API](https://datasets-server.huggingface.co/statistics?dataset=UnipatAI/BabyVision&config=default&split=train)；[论文](https://arxiv.org/abs/2601.06521)
 
@@ -787,7 +753,6 @@ BabyVision（w/tools） / 507：样例原图。点击图片查看原始尺寸。
 
 **评分与覆盖边界：**必须写清pass@1、pass@5与pass^5。pass@5表示多次尝试中至少一次成功，pass^5要求五次全部成功，含义相反方向地强调探索机会与稳定性。截图中的w/tools描述工具配置，具体评分指标需查阅原始脚注。官方展示页提供题面和图片，标准答案保留在正式题集中；本报告据公开材料分析题目结构。
 
-**样例内容：**以下保留取得的原文；长样例在完整句子、段落或代码块边界保留首尾，含省略标记的长度上限为2,000字符。元数据、中文整理和公开展示题单独标注。
 
 **public_example_1** — 官网主问题展示题，未取得答案。原始文本 176 字符。
 
@@ -800,7 +765,7 @@ The image depicts the position part way through a standard chess game. In the la
 
 ![ZeroBench-main（w/tools） / public_example_1：样例原图](../../../../images/bench-2026-10-18/zerobench_public_example_1.jpg)
 
-ZeroBench-main（w/tools） / public_example_1：样例原图。点击图片查看原始尺寸。
+ZeroBench-main（w/tools） / public_example_1：样例原图。
 
 **public_example_2** — 官网主问题展示题，未取得答案。原始文本 368 字符。
 
@@ -813,7 +778,7 @@ Compute the following values and answer the question: A. The longest streak of i
 
 ![ZeroBench-main（w/tools） / public_example_2：样例原图](../../../../images/bench-2026-10-18/zerobench_public_example_2.png)
 
-ZeroBench-main（w/tools） / public_example_2：样例原图。点击图片查看原始尺寸。
+ZeroBench-main（w/tools） / public_example_2：样例原图。
 
 **来源：**[官网与公开样例](https://zerobench.github.io/)；[官方仓库](https://github.com/jonathan-roberts1/zerobench)；[官方数据卡](https://huggingface.co/datasets/jonathan-roberts1/zerobench)
 
@@ -873,6 +838,3 @@ data/：按benchmark分目录保留原始元数据、官方页面、样本和少
 
 **后续复现条件：**使用合法可访问的数据快照，单独配置执行环境，隔离题目与参考答案/验证器，并固定版本、工具和预算。本次交付资料采集与分析结果；运行复现可在上述条件齐备后开展。
 
-## 补充记录
-
-SOL-ExecBench
