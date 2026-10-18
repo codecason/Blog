@@ -8,7 +8,6 @@ layout: post
 
 # Benchmark 统计与小样本分析报告
 
-**样例内容：**以下保留取得的原文；长样例在完整句子、段落或代码块边界保留首尾，含省略标记的长度上限为2,000字符。元数据、中文整理和公开展示题单独标注。
 
 | Benchmark                | DS-V4.1-Flash-1017 | DS-V4.1-Flash | K3   | GLM-5.3 | GPT-5.6 Sol | Opus 5 |
 | ------------------------ | ------------------ | ------------- | ---- | ------- | ----------- | ------ |
@@ -228,6 +227,125 @@ IMPORTANT: Please work on this in a new branch from main and commit everything w
 
 
 
+
+**提示词原文：**官方 mini-SWE-agent 基线公开了系统提示词和任务提示词。下方按通用模板原文展示；具体任务的行为要求由镜像内的参考程序与随包文档共同定义。此次取得完整提示词，系统提示词3,354字符，任务提示词4,408字符。
+
+[官方基线提示词完整原文（固定版本）](https://github.com/SWE-agent/mini-swe-agent/blob/04d809ceab9df28f9adaed044884180159172930/src/minisweagent/config/benchmarks/programbench.yaml)
+
+**programbench_system_prompt** — 官方 mini-SWE-agent 基线系统提示词原文。原始文本 3354 字符。
+
+~~~text
+You are a helpful assistant that can interact with a computer.
+
+Your task is to recreate a program from scratch based only on its observable behavior and bundled documentation.
+You are given a reference executable and its documentation.
+Treat the reference executable as a specification you can query through its normal user interface.
+
+Your submission must be an independent implementation.
+
+［中间省略 1,403 字符；以下接原文结尾］
+
+Your submission must be a genuine reimplementation. The reference `./executable` is for
+observation only — your final solution must not depend on it or any other pre-built version
+of the same tool at runtime.
+
+This includes but is not limited to:
+- Writing a wrapper script that delegates to the reference executable (e.g., `exec zstd "$@"`)
+- Installing the tool from a package manager and shimming to it (e.g., `apt-get install nnn && cp $(which nnn) ./executable`)
+- Writing a `compile.sh` that only runs `chmod +x ./executable` or copies the reference executable (`cp ./executable ./executable`)
+- Building a binary whose main function shells out to an external tool (e.g., `Command::new("miniserve").args(args).exec()`)
+- Re-linking prebuilt `.o` object files found in the workspace without writing new source code
+
+### 3. How the reference executable may be observed
+
+All information about the reference `./executable` must be obtained by interacting with it
+through its normal user interface (CLI flags, stdin/stdout, etc.).
+- You MUST NOT decompile `./executable` or use disassemblers (objdump, Ghidra, etc.) on it
+- You MUST NOT use strace, ltrace, or similar tracing/instrumentation tools on `./executable`
+
+Note: this restriction applies ONLY to the reference `./executable`. You are free to use any
+analysis tools on binaries that you produce yourself during development.
+
+## What IS allowed
+
+- Running the executable with any inputs, flags, and arguments to observe its behavior
+- Reading any documentation files bundled in the workspace
+</RULES>
+~~~
+
+**programbench_instance_prompt** — 官方 mini-SWE-agent 基线任务提示词原文；适用于各任务的通用模板。原始文本 4408 字符。
+
+~~~text
+## Task context
+
+Build a new implementation from scratch that matches the behavior of the reference executable.
+The executable is located at `./executable` in the workspace root.
+
+You also have access to the existing documentation.
+
+## Your task
+
+Implement a program whose externally observable behavior matches the reference executable.
+
+No project-specific dependencies are pre-installed.
+You do NOT have access to the internet.
+**IMPORTANT**: Make sure that the executable(s) and everything else that is an artifact is not committed, i.e., is in your `.gitignore` file.
+Finally, commit your changes.
+
+Make sure that you have a `./compile.sh` file that produces an executable `./executable` in the workspace root.
+`compile.sh` should be executable and should install any dependencies needed to compile the executable.
+If your compile.sh fails to compile on a fresh checkout, your task has failed.
+
+## Important: Build an independent implementation
+
+Your goal is to create an independently authored implementation that reproduces the reference executable's externally observable behavior.
+Use the bundled documentation and experiments with the reference executable to determine the required behavior.
+
+［中间省略 2,496 字符；以下接原文结尾］
+
+## Useful command examples
+
+python is available as python3
+
+### Create a new file:
+
+```bash
+cat <<'EOF' > newfile.py
+import numpy as np
+hello = "world"
+print(hello)
+EOF
+```
+
+### Edit files with sed:
+
+```bash
+# Replace all occurrences
+sed -i 's/old_string/new_string/g' filename.py
+
+# Replace only first occurrence
+sed -i 's/old_string/new_string/' filename.py
+
+# Replace first occurrence on line 1
+sed -i '1s/old_string/new_string/' filename.py
+
+# Replace all occurrences in lines 1-10
+sed -i '1,10s/old_string/new_string/g' filename.py
+```
+
+### View file content:
+
+```bash
+# View specific lines with numbers
+nl -ba filename.py | sed -n '10,20p'
+```
+
+### Any other command you want to run
+
+```bash
+anything
+```
+~~~
 
 **来源：**[官方项目](https://github.com/facebookresearch/ProgramBench)；[官网与评分定义](https://programbench.com/)；[使用说明](https://github.com/facebookresearch/ProgramBench/blob/main/docs/README.md)
 
@@ -828,9 +946,7 @@ ZeroBench-main（w/tools） / public_example_2：样例原图。
 
 ## 七、交付文件与后续测量条件
 
-outputs/benchmark_report.html：本报告，黑字白底，用加粗、标题和表格区分内容。outputs/benchmark_report.txt：同内容纯文本版。outputs/benchmark_statistics.json：全量统计、抽样长度和来源。outputs/download_manifest.json：成功下载文件的来源与校验值。
 
-data/：按benchmark分目录保留原始元数据、官方页面、样本和少量图片。报告正文采用黑白排版，样例图片直接展示并保留题目原有颜色，便于读取图表信息。work/：采集脚本、分析脚本及中间文件。
 
 **后续实测阶段：**部署容器或虚拟机、取得所需正式题集并运行模型评测。通过运行日志记录模型分数、实际耗时、token消耗和单题成本；API调用费用按所用服务计量。
 
