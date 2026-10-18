@@ -10,13 +10,20 @@ mathjax: true
 
 首先，OPD是一种知识蒸馏，就是让一个模型学习另一个模型的输出行为。接受训练的模型叫作学生模型（student），提供指导的模型叫作教师模型（teacher）。训练时，可以比较两个模型给候选 token 分配的概率，再调整学生模型，使它的分布接近教师模型。跟常见的SFT不同，OPD先让 student 按照自己当前的概率分布逐步生成token，再让 teacher 根据 student 输出的上下文输出token概率并进行引导。
 
-一般情况下，学生分布和教师分布的顺序不影响计算结果，只要冻结一个模型，另外一个模型最后都会倾向于拟合冻结模型。
-但是根据文献的分析，前向KL会尽可能同时拟合多个峰，反向KL倾向于拟合单个峰。
-于是就有了学生的分布在前的reverse KL。直观来说，是因为在工业界OPD通常用于合版，也就是将多个teacher的能力合并起来，此时让学生学习多峰就没必要，因为它们是学习多个拥有专长的老师而不是学习一个全才的老师。
+一般情况下，我们都认为教师模型是冻结的，另外一个模型（学术模型）最后都会倾向于拟合冻结模型。
 
-最小化 $D_{\mathrm{KL}}(p_{\text{student}}\|q_{\text{teacher}})$ 时，**教师固定，更新学生参数，让学生分布向教师分布靠近**。
+但是**前向KL会尽可能同时拟合多个峰，反向KL倾向于拟合单个峰**。
 
-实际上，这里是因为 OPD 使用**学生自己生成的回答**训练，Reverse KL 正好按学生分布计算期望：
+设教师分布为 $q$，学生分布为 $p$。前向 KL 为 $D_{\mathrm{KL}}(q\|p)=\sum_x q(x)\log\frac{q(x)}{p(x)}$。
+
+若某处 $q(x)>0$ 而 $p(x)\to 0$，则 $\log\frac{q(x)}{p(x)}\to+\infty$，该项被 $q(x)>0$ 加权，KL 发散。所以学生必须在该处给正概率，即教师有概率的地方学生不敢给零。反向 KL $D_{\mathrm{KL}}(p\|q)=\sum_x p(x)\log\frac{p(x)}{q(x)}$ 的权重是 $p(x)$，学生不给概率的地方不惩罚，只惩罚学生有概率、教师没概率的区域。
+
+
+
+
+直观来说，是因为在工业界OPD通常用于合版，也就是将多个teacher的能力合并起来，而训练的流程正是多阶段的OPD，此时让学生学习多峰就没必要，因为它们是学习多个拥有专长的老师而不是学习一个全才的老师。这样最小化 $D_{\mathrm{KL}}(p_{\text{student}}\|q_{\text{teacher}})$ 时，**教师固定，更新学生参数，让学生分布依次向多个教师分布靠近**而不会遗忘原有的知识。
+
+同时，因为 OPD 使用**学生自己生成的回答**训练，Reverse KL 正好按学生分布计算期望：
 
 $$
 D_{\mathrm{KL}}(p\|q)
@@ -24,9 +31,16 @@ D_{\mathrm{KL}}(p\|q)
 $$
 
 
-在这篇论文中，区分了OPD的三种监督粒度（sampled-token，全词表，top-k），其中**Sampled-token OPD**是指，只看 student 实际采样出来的那个 token。它的单步损失是 student 对该 token 的 log 概率减去 teacher 输出的 log 概率。论文指出，这是一种 token-level reverse KL 的无偏单样本估计，也是较轻量、较常见的实现。
+回到这篇论文，它区分了OPD的三种监督粒度（sampled-token，全词表，top-k）。其中**Sampled-token OPD**，是只看 student 实际采样出来的那个 token。它的单步损失是 student 对该 token 的 log 概率减去 teacher 输出的 log 概率。论文指出，这是一种 token-level reverse KL 的无偏单样本估计，也是较轻量、较常见的实现。
 
-通常来说，无偏是指随机估计量在重复采样很多次之后，平均值等于它想估计的真实量。但是文章证明，这个估计值除了等于reverse KL的无偏估计，同时也是全词表的reverse KL的无偏估计。
+无偏是指随机估计量在重复采样很多次之后，平均值等于它想估计的真实量。在多次采样求和的情况下，Sampled-token OPD正是全词表的无偏估计。
+
+Sampled-token OPD和全词表两者针对的是**同一个位置、同一个前缀下，学生与教师的下一词分布差异**，区别在计算方式。
+
+- **全词表监督**：遍历所有候选词，精确计算该位置的反向 KL：$ K=\sum_v p(v)\log\frac{p(v)}{q(v)} $ 一次就利用所有候选词的概率信息，监督更密，开销更大。
+- **Sampled-token**：从学生分布抽一个词 $y\sim p$，只用它的 $ \ell=\log\frac{p(y)}{q(y)} $作为估计。因为 $\mathbb E[\ell]=K$，长期平均对应同一个 KL，但单次噪声更大，所需教师概率信息更少。
+
+另外，全词表也只监督学生走到的前缀，并不遍历所有可能序列。
 
 ## 1. 有偏估计/无偏估计的定义
 
@@ -40,7 +54,7 @@ $$
 
 
 
-## 2. 放到这篇 OPD 里，无偏指什么
+## 2. 本文的OPD指什么
 
 在 OPD 中，给定输入 $x$ 和学生已经生成的前缀 $\hat y_{<t}$，学生和教师分别预测第 $t$ 个 token，其概率分布记为：
 
@@ -62,7 +76,7 @@ p_t(v)
 \left[\log p_t(v)-\log q_t(v)\right].
 $$
 
-这个公式按学生的概率 $p_t(v)$，对整个词表上的对数概率差加权求和。但是整个词表很大，完整算很贵。所以 sampled-token OPD 不看整个词表，只从 student 分布里采样一个 token：
+这个公式按学生的概率 $p_t(v)$，对整个词表上的对数概率差加权求和。但是整个词表很大，完整计算太昂贵了。所以 sampled-token OPD 不看整个词表，只从 student 分布里采样一个 token：
 
 $$
 \hat{y}_t \sim p_t
@@ -140,51 +154,11 @@ $$
 $$
 刚好就是完整 KL。所以它是无偏的。
 
-## 那什么情况是有偏的？
-
-第一种有偏：**采样分布不对，又不做修正**。
-
-比如你不是按 student 分布采样，而是均匀采样 A 和 B。那么期望会变成：
-$$
-0.5\log 2
-+
-0.5\log \frac{1}{3}
-$$
-所以这是有偏的。
-
-第二种有偏：**只看 top-1，也就是永远只看概率最大的 token**。
-
-上面的例子里，top-1 永远是 A。那么估计值永远是：
-$$
-\log 2
-$$
-但真实 KL 是：
-$$
-0.8\log 2
-+
-0.2\log \frac{1}{3}
-$$
-若在同一 top-1 子集内归一化，双方概率均为 1，KL 为 0；上面的 log 2 是未归一化的对数概率比。
-
-两者不一样，所以 top-1 不是完整 KL 的无偏估计。论文里也说 Top-k OPD 是把 full-vocabulary KL 换成 subset-based approximation，并且会丢掉集合外的概率质量，所以它是对完整词表 KL 的近似，而不是完整 KL 的无偏单样本估计。
-
-第三种有偏：**截断词表后直接归一化，只在 top-k 内算 KL，却声称自己在估计 full-vocabulary KL**。
-
-这时你算的是：
-$$
-D_{\mathrm{KL}}(\bar{p}^{(S_t)}_t \| \bar{q}^{(S_t)}_t)
-$$
-而不是：
-$$
-D_{\mathrm{KL}}(p_t \| q_t)
-$$
-因为 top-k 外面的 token 被丢掉了。此时它并不是完整词表 KL 的无偏估计。
-
-## 5. 混淆点
+## 4. 混淆点
 
 无偏不代表低方差。
 
-sampled-token OPD 是无偏的，但因为每次只采一个 token，所以单次估计可能很抖。Full-vocabulary OPD 不采样，直接算完整 KL，所以更稳定，但代价更高。论文也正是这样区分 sampled-token OPD、full-vocabulary OPD 和 top-k OPD 的：sampled-token 轻量但采样噪声更大；full-vocabulary 梯度更密集但内存更贵；top-k 介于两者之间，是一种近似。
+sampled-token OPD 是无偏的，但因为每次只采一个 token，所以单次估计可能偏差很大。Full-vocabulary OPD 不采样，直接算完整 KL，所以更稳定，但代价更高。论文也正是这样区分 sampled-token OPD、full-vocabulary OPD 和 top-k OPD 的：sampled-token 轻量但采样噪声更大；full-vocabulary 梯度更密集但内存更贵；top-k 介于两者之间，是一种近似。
 
 #### References:
 
