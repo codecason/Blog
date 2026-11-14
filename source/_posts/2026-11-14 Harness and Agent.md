@@ -110,15 +110,15 @@ Sub\-Agent：提高速度；
 
 #### References
 
-When to build an agent https://cdn\.openai\.com/business\-guides\-and\-resources/a\-practical\-guide\-to\-building\-agents\.pdf
+When to build an agent https://cdn.openai.com/business-guides-and-resources/a-practical-guide-to-building-agents.pdf
 
-Pi\-Agent https://pi\.dev/
+Pi-Agent https://pi.dev/
 
-Deer\-Flow https://github\.com/bytedance/deer\-flow
+Deer-Flow https://github.com/bytedance/deer-flow
 
 Sandbox https://github.com/agent-infra/sandbox/
 
 DeepSeek-Harness https://www.datacamp.com/blog/what-is-deepseek-harness
 
-Smolagents 入门级Agent https://github\.com/huggingface/smolagents
+Smolagents 入门级Agent https://github.com/huggingface/smolagents
 
