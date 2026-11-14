@@ -15,9 +15,19 @@ layout: post
 
 对应的解决方式是：压缩；重试；校验工具；确定性工具或格式约束；性能优化；
 
-依赖于训练数据的分布分为：域外数据无法处理，即不可能提前知道业务知识；
+依赖于训练数据的分布分为：域外数据无法处理，即不可能提前知道业务知识；自然语言不可能完全无歧义；
 
 ### 2.**被包装成Harness的技术：**
+
+
+| 模块                | 常见技术                                  |
+| ------------------- | ----------------------------------------- |
+| Agent Loop          | Python / TypeScript、AsyncIO、状态机      |
+| Tool Runtime        | Function Calling、MCP、API、Shell         |
+| Context Engineering | Prompt Template、RAG、Context Compression |
+| Memory & State      | Redis、PostgreSQL、向量数据库、Checkpoint |
+| Guardrails          | RBAC、Sandbox、Docker、Policy Engine      |
+| Evaluation          | pytest、LLM-as-a-Judge、自动化测试        |
 
 #### 2.1 上下文有限：
 
@@ -59,13 +69,13 @@ Sub\-Agent：提高速度；
 
 还有一个基本的问题，大模型只会吐token，而负责整个系统的循环，即发起请求、接收调用、真正去执行、处理失败、把结果回填、再次请求。这个循环的机械部分才是 Harness 的。
 
-
+而 Evaluation 是在大模型无法完全跟不同人类偏好对齐的前提下产生的问题；
 
 ### 3.更多更难任务下的问题
 
 无限多的任务和无限多的领域知识；
 
-无限大的scope，超出本身可能获知知识的题目（如）；
+无限大的scope，超出本身可能获知知识的领域（如隐藏偏好、人类知识）；
 
 跟真实世界的交互；
 
@@ -96,7 +106,6 @@ Sub\-Agent：提高速度；
 
 
 从根本上讲，目前的agent最严峻的问题在于大模型的确定性不足、幻觉问题、低效率与输出不确定性，需要程序兜底。而从根本上幻觉问题不可解决，低效率与边际成本不为0，所以Agent必然依赖于确定性程序提供稳定性保障。
-
 
 
 #### References
